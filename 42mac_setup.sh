@@ -1,5 +1,36 @@
 #!bin/zsh -e
 
+#-------------------Install brew------------------#
+echo "Setting up Dock ..."
+# install brew
+if [ ! -e $HOME/goinfre/.brew ]; then
+curl -fsSL https://raw.githubusercontent.com/mfunyu/config/main/42homebrew_install.sh | zsh
+source ~/.zshrc
+fi
+
+echo "Installing brew packages ..."
+brew install nodebrew
+
+echo "Installing nodebrew packages ..."
+nodebrew setup
+nodebrew install v20.11.0
+nodebrew use v20.11.0
+source ~/.zshrc
+
+echo "Installing npm packages ..."
+if [ ! -e $HOME/goinfre/.npm ]; then
+npm install -g npm
+fi
+
+npm install -g aicommits
+
+# # apply brew cmd
+# source ~/.zshrc
+
+## ban .DS_store
+defaults write com.apple.desktopservices DSDontWriteNetworkStores True
+
+
 # 外観モードをダークモードに変更
 osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
 
@@ -35,3 +66,8 @@ defaults write com.brave.Browser DefaultSearchProviderKeyword -string "google.co
 
 # 英数字を強制的に半角にする
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+# キャッシュがもし存在すればそれを全て削除
+if [ -d /Library/Caches ]; then
+	sudo rm -Rfv /Library/Caches/* 2> /dev/null > /dev/null
+fi
