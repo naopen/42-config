@@ -67,6 +67,15 @@ defaults write com.brave.Browser DefaultSearchProviderKeyword -string "google.co
 # 英数字を強制的に半角にする
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
+# 日付と曜日を表示
+defaults write com.apple.menuextra.clock "DateFormat" -string "EEE H:mm"
+
+# reload
+# killall Finder
+killall Dock
+killall SystemUIServer
+killall Brave\ Browser
+
 # キャッシュがもし存在すればそれを全て削除
 if [ -d /Library/Caches ]; then
 	sudo rm -Rfv /Library/Caches/* 2> /dev/null > /dev/null
